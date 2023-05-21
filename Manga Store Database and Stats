@@ -1,15 +1,41 @@
 --Create a Manga Store Database
 
-CREATE TABLE manga (id INTEGER PRIMARY KEY, category TEXT, quantity INTEGER, aisle INTEGER, recommended_title TEXT, price INTEGER);
+CREATE TABLE manga (id INTEGER PRIMARY KEY, category TEXT, quantity INTEGER, aisle INTEGER, recommended_title TEXT, price INTEGER, popularity INTEGER);
 
-INSERT INTO manga VALUES (1, "Romance", 3, 5, "Ao Haru Ride", 9);
-INSERT INTO manga VALUES (2, "Music", 3, 1, "Nana", 20);
-INSERT INTO manga VALUES (3, "Action", 3, 3, "Jujutsu Kaisen", 10);
-INSERT INTO manga VALUES (4, "Mystery", 3, 2, "Moriarty The Patriot", 10);
-INSERT INTO manga VALUES (5, "Horror", 3, 4, "Another", 8);
+INSERT INTO manga VALUES (1, "Romance", 3, 5, "Ao Haru Ride", 9, 40);
+INSERT INTO manga VALUES (2, "Music", 3, 1, "Nana", 20, 96);
+INSERT INTO manga VALUES (3, "Action", 3, 3, "Jujutsu Kaisen", 10, 97);
+INSERT INTO manga VALUES (4, "Mystery", 3, 2, "Moriarty The Patriot", 10, 70);
+INSERT INTO manga VALUES (5, "Horror", 3, 4, "Another", 8, 60);
+INSERT INTO manga VALUES (6, "Romance", 2, 5, "Sasaki and Miyano", 13, 65);
+INSERT INTO manga VALUES (7, "Music", 5, 1, "Given", 9, 58);
+INSERT INTO manga VALUES (8, "Action", 1, 3, "Chainsaw Man", 8, 90);
+INSERT INTO manga VALUES (9, "Mystery", 7, 2, "Death Note", 8, 95);
+INSERT INTO manga VALUES (10, "Horror", 2, 4, "Tokyo Ghoul", 12, 80);
 
---How much quantity is in each aisle?
-SELECT aisle, SUM(quantity) FROM manga GROUP BY aisle;
+--How many quantity in each aisle?
+SELECT aisle, SUM(quantity)
+FROM manga
+GROUP BY aisle;
 
---Which manga titles cost more than $7?
-SELECT * FROM manga WHERE price > 7 ORDER BY PRICE;
+--Which titles are more than $9?
+SELECT recommended_title, price 
+FROM manga 
+WHERE price > 9 
+ORDER BY PRICE;
+
+--View which titles are in each category.
+SELECT recommended_title, category 
+FROM manga 
+ORDER BY category ASC;
+
+--Find the average price of Romance manga.
+SELECT AVG(price) "Romance Manga Average Price"
+FROM manga
+where category='Romance';
+
+--Which titles are the most popular?
+SELECT recommended_title, price, popularity
+FROM manga
+order by popularity desc
+limit 5;
